@@ -94,122 +94,120 @@
                 <!-- Game Rule Cards -->
                 <div id="game-baseball" class="game-content hidden bg-gray-200 p-8 border-3d">
                     <h2 class="text-3xl font-bold mb-2 text-blue-800" style="font-family: Impact, sans-serif;">1. Baseball ⚾</h2>
-                    <p class="italic text-gray-700 mb-6">A 7-Card Stud game with specific wild cards.</p>
+                    <p class="italic text-gray-700 mb-6">A 7-Card Stud variant with wild cards and special rules.</p>
                     
-                    <h3 class="text-xl font-bold text-black mb-3">How to Play</h3>
-                    <p class="mb-6">Each player is dealt 7 cards (2 down, 4 up, 1 down), with a round of betting after each face-up card is dealt. The goal is to make the best 5-card poker hand.</p>
+                    <h3 class="text-xl font-bold text-black mb-3">Game Play</h3>
+                    <p class="mb-6">The game follows the structure of 7-Card Stud. Each player receives two cards face-down and one card face-up, followed by a betting round. Three more cards are dealt face-up one at a time, with a betting round after each. The final card is dealt face-down, followed by a final betting round. Players then form their best 5-card hand.</p>
                     
                     <h3 class="text-xl font-bold text-black mb-3">Special Rules</h3>
                     <ul class="list-disc list-inside space-y-2">
-                        <li><strong>3s and 9s are Wild:</strong> Any 3 or 9 can be used as any card.</li>
-                        <li><strong>4s Get an Extra Card:</strong> If you are dealt a 4 face-up, you must immediately pay a set amount (e.g., a dime) to the pot to receive one extra card dealt face down.</li>
+                        <li><strong>Wild Cards:</strong> All 3s and 9s are wild.</li>
+                        <li><strong>Buy a Card:</strong> If a player is dealt a 4 face-up, they must pay a fee to the pot to receive an additional card face-down.</li>
                     </ul>
                 </div>
 
                 <div id="game-cross" class="game-content hidden bg-gray-200 p-8 border-3d">
                     <h2 class="text-3xl font-bold mb-2 text-blue-800" style="font-family: Impact, sans-serif;">2. The Cross 十字</h2>
-                    <p class="italic text-gray-700 mb-6">A community card game where you use a shared cross of cards.</p>
-                    <h3 class="text-xl font-bold text-black mb-3">How to Play</h3>
+                    <p class="italic text-gray-700 mb-6">A community card game using a cross-shaped board.</p>
+                    <h3 class="text-xl font-bold text-black mb-3">Game Play</h3>
                     <ol class="list-decimal list-inside space-y-2">
-                        <li>Each player is dealt four cards face down, followed by a round of betting.</li>
-                        <li>The dealer lays out five community cards face down in the shape of a cross.</li>
-                        <li>The dealer reveals the cards line by line (horizontal or vertical), with a betting round after each reveal.</li>
-                        <li>Players must make the best 5-card hand using <strong>two</strong> cards from their hand combined with the three cards from <strong>either</strong> the horizontal line <strong>or</strong> the vertical line of the cross.</li>
+                        <li>Each player is dealt four private cards face-down (hole cards). A round of betting occurs.</li>
+                        <li>The dealer places five community cards face-down in a cross formation (one center, four arms).</li>
+                        <li>The cards are revealed one section at a time (e.g., the horizontal row, then the vertical row), with a betting round after each reveal.</li>
+                        <li>To make their hand, players must use exactly **two** of their hole cards with the three cards forming **either** the horizontal or vertical line of the cross.</li>
                     </ol>
                 </div>
 
                 <div id="game-queen" class="game-content hidden bg-gray-200 p-8 border-3d">
                     <h2 class="text-3xl font-bold mb-2 text-blue-800" style="font-family: Impact, sans-serif;">3. Follow the Queen 👑</h2>
-                    <p class="italic text-gray-700 mb-6">A 7-Card Stud game with a wild card that can change at any moment.</p>
-                    <h3 class="text-xl font-bold text-black mb-3">How to Play</h3>
-                    <p class="mb-6">Played exactly like standard 7-Card Stud.</p>
-                    <h3 class="text-xl font-bold text-black mb-3">Special Rules</h3>
+                    <p class="italic text-gray-700 mb-6">A 7-Card Stud variant with a dynamic wild card.</p>
+                    <h3 class="text-xl font-bold text-black mb-3">Game Play</h3>
+                    <p class="mb-6">This game is played identically to standard 7-Card Stud.</p>
+                    <h3 class="text-xl font-bold text-black mb-3">Wild Card Rules</h3>
                     <ul class="list-disc list-inside space-y-2">
-                        <li>All Queens are wild.</li>
-                        <li>The card dealt face-up <em>immediately following</em> a Queen is also wild for all players.</li>
-                        <li>If another Queen is dealt face-up later in the hand, the wild card designation shifts to whatever new card follows it.</li>
+                        <li>All Queens are always wild.</li>
+                        <li>The next card dealt face-up immediately after a Queen also becomes wild for all players.</li>
+                        <li>If a subsequent Queen is dealt face-up, the previous "follower" card is no longer wild, and this new Queen's follower becomes the new wild card.</li>
                     </ul>
                 </div>
 
                 <div id="game-gurdy" class="game-content hidden bg-gray-200 p-8 border-3d">
                     <h2 class="text-3xl font-bold mb-2 text-blue-800" style="font-family: Impact, sans-serif;">4. Dirty Gurdy ☠️</h2>
-                    <p class="italic text-gray-700 mb-6">A 7-Card Stud game with a "poison" card that resets the hand.</p>
-                    <h3 class="text-xl font-bold text-black mb-3">How to Play</h3>
-                    <p class="mb-6">Played exactly like standard 7-Card Stud.</p>
-                    <h3 class="text-xl font-bold text-black mb-3">Special Rule</h3>
+                    <p class="italic text-gray-700 mb-6">A special condition applied to 7-Card Stud that can void the hand.</p>
+                    <h3 class="text-xl font-bold text-black mb-3">Game Play</h3>
+                    <p class="mb-6">Played as a standard game of 7-Card Stud.</p>
+                    <h3 class="text-xl font-bold text-black mb-3">The Queen of Spades Rule</h3>
                     <ul class="list-disc list-inside space-y-2">
-                        <li>If the <strong>Queen of Spades (Q♠)</strong> is dealt to any player face-up, the hand is immediately dead.</li>
-                        <li>All cards are discarded, everyone re-antes, and the pot from the dead hand is carried over to the new deal, creating a larger pot.</li>
+                        <li>If the **Queen of Spades (Q♠)** is dealt face-up to any player at any time, the hand is immediately declared dead.</li>
+                        <li>All cards are collected, the pot remains, everyone must ante again, and a new hand is dealt by the same dealer.</li>
                     </ul>
                 </div>
 
                 <div id="game-trash" class="game-content hidden bg-gray-200 p-8 border-3d">
                     <h2 class="text-3xl font-bold mb-2 text-blue-800" style="font-family: Impact, sans-serif;">5. Pass the Trash ♻️</h2>
-                    <p class="italic text-gray-700 mb-6">A 7-card game where you try to build the best hand while passing your unwanted cards.</p>
-                    <h3 class="text-xl font-bold text-black mb-3">How to Play</h3>
+                    <p class="italic text-gray-700 mb-6">A game where players pass cards to improve their hand.</p>
+                    <h3 class="text-xl font-bold text-black mb-3">Game Play</h3>
                     <ol class="list-decimal list-inside space-y-2">
-                        <li>Each player is dealt seven cards.</li>
-                        <li>Players select three cards to pass to the player on their left. A round of betting follows.</li>
-                        <li>This is typically followed by passing two cards, betting, then passing one final card, followed by a final betting round.</li>
-                        <li>The player with the best 5-card poker hand wins.</li>
+                        <li>Each player is dealt a hand of seven cards.</li>
+                        <li>Players choose three cards to pass to the player on their left. A round of betting occurs after everyone has received their new cards.</li>
+                        <li>Typically, this is followed by a round of passing two cards, another betting round, and a final round of passing one card and betting.</li>
+                        <li>After all passes, players form their best 5-card poker hand to determine the winner.</li>
                     </ol>
                 </div>
 
                 <div id="game-anaconda" class="game-content hidden bg-gray-200 p-8 border-3d">
                     <h2 class="text-3xl font-bold mb-2 text-blue-800" style="font-family: Impact, sans-serif;">6. Anaconda 🐍</h2>
-                    <p class="italic text-gray-700 mb-6">A fast and simple game of nerve where losers pay big.</p>
-                    <h3 class="text-xl font-bold text-black mb-3">How to Play</h3>
+                    <p class="italic text-gray-700 mb-6">A simple game of nerve where losing can be costly.</p>
+                    <h3 class="text-xl font-bold text-black mb-3">Game Play</h3>
                     <ol class="list-decimal list-inside space-y-2">
-                        <li>Each player is dealt two cards face down.</li>
-                        <li>Simultaneously, all players declare if they are "in" or "out" for the hand.</li>
-                        <li>The players who are "in" reveal their hands. The best high hand (e.g., a pair) wins the pot.</li>
+                        <li>Each player is dealt two cards face-down.</li>
+                        <li>On a count of three, all players who wish to compete for the pot simultaneously declare they are "in" (often by holding their cards out). Players who fold pull their cards back.</li>
+                        <li>The players who remained "in" reveal their hands. The best high hand wins the pot.</li>
                     </ol>
                     <div class="mt-6 bg-yellow-200 text-black p-4 border-3d-inset">
-                        <p><strong class="font-bold">The Catch:</strong> All players who stayed "in" but lost must <strong>match the amount that was in the pot</strong>, creating a huge pot for the next hand.</p>
+                        <p><strong class="font-bold">The Catch:</strong> Any player who stayed in the hand but did not win must pay a penalty to the next pot equal to the full amount of the pot that was just won.</p>
                     </div>
                 </div>
                 
                 <div id="game-acey" class="game-content hidden bg-gray-200 p-8 border-3d">
                     <h2 class="text-3xl font-bold mb-2 text-blue-800" style="font-family: Impact, sans-serif;">7. Acey-Deucey ♠️ACE DEUCE♦️</h2>
-                    <p class="italic text-gray-700 mb-6">A game of chance played between each player and the pot.</p>
-                    <h3 class="text-xl font-bold text-black mb-3">How to Play</h3>
+                    <p class="italic text-gray-700 mb-6">A betting game where players wager against the pot.</p>
+                    <h3 class="text-xl font-bold text-black mb-3">Game Play</h3>
                      <ol class="list-decimal list-inside space-y-2">
-                        <li>The pot is started with an ante from each player.</li>
-                        <li>The dealer deals two cards face-up to the player on their left.</li>
-                        <li>That player can bet any amount (from the minimum bet up to the total value of the pot) that the next card dealt will fall <em>between</em> the values of their two cards.</li>
-                        <li><strong>Win:</strong> The player takes their wager from the pot.</li>
-                        <li><strong>Lose:</strong> The player pays their wager into the pot. (Hitting one of the card values is a loss).</li>
-                        <li>Play moves to the next person.</li>
+                        <li>Each player contributes an ante to start the pot.</li>
+                        <li>In turn, starting to the dealer's left, each player is dealt two cards face-up.</li>
+                        <li>The player may bet any amount, up to the current total of the pot, that the third card dealt will have a rank that falls between the first two.</li>
+                        <li>**Winning Bet:** The player collects their wager from the pot.</li>
+                        <li>**Losing Bet:** The player must pay their wager into the pot. A bet is lost if the third card is outside the range or matches the rank of either of the first two cards ("hitting the post").</li>
                     </ol>
                 </div>
 
                 <div id="game-diamond" class="game-content hidden bg-gray-200 p-8 border-3d">
                     <h2 class="text-3xl font-bold mb-2 text-blue-800" style="font-family: Impact, sans-serif;">8. 7-Card Stud High Diamond ♦️</h2>
-                    <p class="italic text-gray-700 mb-6">A split-pot game with a unique twist and a penalty for losers.</p>
-                     <h3 class="text-xl font-bold text-black mb-3">How to Play</h3>
-                    <p class="mb-6">Played as a standard game of 7-Card Stud. At the showdown, the pot is split into two equal halves.</p>
-                    <h3 class="text-xl font-bold text-black mb-3">Winning the Pot</h3>
+                    <p class="italic text-gray-700 mb-6">A split-pot variant of 7-Card Stud with a penalty for non-winners.</p>
+                     <h3 class="text-xl font-bold text-black mb-3">Game Play</h3>
+                    <p class="mb-6">Played as a standard game of 7-Card Stud. At the showdown, the pot is divided equally between two winners.</p>
+                    <h3 class="text-xl font-bold text-black mb-3">Winning Conditions</h3>
                     <ul class="list-disc list-inside space-y-2">
-                        <li><strong>Half the pot</strong> goes to the player with the best 5-card poker hand.</li>
-                        <li><strong>The other half</strong> goes to the player holding the single highest-ranking Diamond in their 7-card hand (Ace is high).</li>
+                        <li><strong>High Hand:</strong> One half of the pot is awarded to the player with the best traditional 5-card poker hand.</li>
+                        <li><strong>High Diamond:</strong> The other half is awarded to the player who holds the single highest-ranking card of the Diamond suit among their seven cards (Ace of Diamonds is the highest possible).</li>
                     </ul>
                      <div class="mt-6 bg-yellow-200 text-black p-4 border-3d-inset">
-                        <p><strong class="font-bold">The Penalty:</strong> Any player at the showdown who does not win either half of the pot must <strong>match the entire pot</strong>. This pot is then carried over to the next hand.</p>
+                        <p><strong class="font-bold">The Penalty:</strong> At the showdown, any player who does not win either the High Hand or the High Diamond must match the entire pot, which carries over to the next hand.</p>
                     </div>
                 </div>
 
                 <div id="game-ace" class="game-content hidden bg-gray-200 p-8 border-3d">
                     <h2 class="text-3xl font-bold mb-2 text-blue-800" style="font-family: Impact, sans-serif;">9. Chase the Ace 🏃‍♂️💨</h2>
-                    <p class="italic text-gray-700 mb-6">A one-card elimination game where the goal is to not be last.</p>
+                    <p class="italic text-gray-700 mb-6">An elimination game where the goal is simply to not have the lowest card.</p>
                     <h3 class="text-xl font-bold text-black mb-3">Objective & Setup</h3>
-                    <p class="mb-6">To avoid having the lowest card and be the last player with "lives" remaining. Each player starts with three quarters in front of them as their "lives."</p>
-                    <h3 class="text-xl font-bold text-black mb-3">How to Play</h3>
+                    <p class="mb-6">Be the last player with "lives" (quarters) remaining. Each player begins with three quarters placed in front of them.</p>
+                    <h3 class="text-xl font-bold text-black mb-3">Game Play</h3>
                     <ol class="list-decimal list-inside space-y-2">
-                        <li>The dealer gives one card to each player. Kings are "safe" and are turned face-up immediately.</li>
-                        <li>Starting to the dealer's left, each player can either keep their card or trade it with the person to their left (who must accept, unless they have a King).</li>
-                        <li>The dealer can trade their card for the top card of the deck.</li>
-                        <li>Everyone reveals their card. The player with the lowest card (Ace is low) puts one of their quarters in the pot.</li>
-                        <li>The last player with quarters left wins the entire pot.</li>
+                        <li>One card is dealt to each player. A player dealt a King is safe for the round and turns it face-up.</li>
+                        <li>Beginning with the player to the dealer's left, each player must either keep their card or trade it with the player to their left. The trade is mandatory for the receiving player unless they hold a King.</li>
+                        <li>The dealer has the final option, and may either keep their card or exchange it for the top card of the deck.</li>
+                        <li>All cards are revealed. The player with the lowest ranking card (Ace is low) loses a "life" and must place one quarter in the pot. The last player with quarters wins the pot.</li>
                     </ol>
                 </div>
             </div>
@@ -251,6 +249,4 @@
 
 </body>
 </html>
-
-
 
