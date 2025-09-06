@@ -51,9 +51,11 @@
     <div class="flex flex-col md:flex-row min-h-screen">
         <!-- Sidebar Navigation -->
         <nav class="w-full md:w-64 bg-blue-800 text-white p-4 md:p-6 border-r-2 border-black">
+            <ul class="space-y-2 mb-6">
+                 <li><a href="#" class="nav-link block py-2 px-4 border-2 border-transparent hover:border-white text-xl" data-target="game-cover">🏠 Welcome</a></li>
+            </ul>
             <h1 class="text-2xl text-yellow-300 mb-6 border-b-2 border-yellow-400 pb-2" style="font-family: Impact, sans-serif;">🃏 GAME LIST</h1>
             <ul id="game-nav" class="space-y-2">
-                <li><a href="#" class="nav-link block py-2 px-4 border-2 border-transparent hover:border-white" data-target="game-cover">Welcome</a></li>
                 <li><a href="#" class="nav-link block py-2 px-4 border-2 border-transparent hover:border-white" data-target="game-baseball">1. Baseball</a></li>
                 <li><a href="#" class="nav-link block py-2 px-4 border-2 border-transparent hover:border-white" data-target="game-cross">2. The Cross</a></li>
                 <li><a href="#" class="nav-link block py-2 px-4 border-2 border-transparent hover:border-white" data-target="game-queen">3. Follow the Queen</a></li>
@@ -216,7 +218,7 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            const navLinks = document.querySelectorAll('#game-nav .nav-link');
+            const navLinks = document.querySelectorAll('nav .nav-link');
             const gameContents = document.querySelectorAll('.game-content');
 
             function showContent(targetId) {
@@ -249,5 +251,6 @@
 
 </body>
 </html>
+
 
 
