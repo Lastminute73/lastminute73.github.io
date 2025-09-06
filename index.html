@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dealer's Choice Poker Night Guide</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Chosen Palette: Classic Casino (Stone, Deep Red, Gold) -->
+    <!-- Application Structure Plan: A two-column layout with a fixed navigation sidebar listing all games. Clicking a game name dynamically shows its rules in the main content area. This is chosen over a simple scrollable document for rapid, on-the-fly rule lookup during a fast-paced game night, enhancing usability by providing instant access to specific information. -->
+    <!-- Visualization & Content Choices: Game: Rules Text -> Goal: Organize/Inform -> Viz: Structured HTML/CSS Cards -> Interaction: Click-to-reveal via JS. Justification: No quantitative data exists, so charts are unnecessary. This interactive card system is the most direct and user-friendly way to present distinct blocks of text-based rules, avoiding scrolling and searching. Method: Vanilla JS, Tailwind CSS, Unicode icons. Confirmed NO SVG/Mermaid. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .nav-link.active {
+            background-color: #991b1b;
+            color: white;
+            transform: scale(1.05);
+        }
+    </style>
+     <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+
+</head>
+<body class="bg-stone-100 text-gray-800">
+
+    <div class="flex flex-col md:flex-row min-h-screen">
+        <!-- Sidebar Navigation -->
+        <nav class="w-full md:w-64 bg-gray-800 text-white p-4 md:p-6 shadow-lg md:min-h-screen">
+            <h1 class="text-2xl font-bold font-serif text-yellow-400 mb-6 border-b-2 border-yellow-500 pb-2">🃏 Game List</h1>
+            <ul id="game-nav" class="space-y-2">
+                <li><a href="#" class="nav-link active block py-2 px-4 rounded-lg transition-all duration-200 hover:bg-red-800 hover:text-white" data-target="game-baseball">1. Baseball</a></li>
+                <li><a href="#" class="nav-link block py-2 px-4 rounded-lg transition-all duration-200 hover:bg-red-800 hover:text-white" data-target="game-cross">2. The Cross</a></li>
+                <li><a href="#" class="nav-link block py-2 px-4 rounded-lg transition-all duration-200 hover:bg-red-800 hover:text-white" data-target="game-queen">3. Follow the Queen</a></li>
+                <li><a href="#" class="nav-link block py-2 px-4 rounded-lg transition-all duration-200 hover:bg-red-800 hover:text-white" data-target="game-gurdy">4. Dirty Gurdy</a></li>
+                <li><a href="#" class="nav-link block py-2 px-4 rounded-lg transition-all duration-200 hover:bg-red-800 hover:text-white" data-target="game-trash">5. Pass the Trash</a></li>
+                <li><a href="#" class="nav-link block py-2 px-4 rounded-lg transition-all duration-200 hover:bg-red-800 hover:text-white" data-target="game-anaconda">6. Anaconda</a></li>
+                <li><a href="#" class="nav-link block py-2 px-4 rounded-lg transition-all duration-200 hover:bg-red-800 hover:text-white" data-target="game-acey">7. Acey-Deucey</a></li>
+                <li><a href="#" class="nav-link block py-2 px-4 rounded-lg transition-all duration-200 hover:bg-red-800 hover:text-white" data-target="game-diamond">8. 7-Card Stud High Diamond</a></li>
+                <li><a href="#" class="nav-link block py-2 px-4 rounded-lg transition-all duration-200 hover:bg-red-800 hover:text-white" data-target="game-ace">9. Chase the Ace</a></li>
+            </ul>
+        </nav>
+
+        <!-- Main Content Area -->
+        <main class="flex-1 p-6 md:p-10">
+            <div id="game-content-area">
+                <!-- Welcome/Intro Card -->
+                 <div id="game-intro" class="game-content bg-white p-8 rounded-xl shadow-2xl border-l-8 border-red-800">
+                    <h2 class="text-4xl font-bold font-serif text-gray-900 mb-4">Dealer's Choice Poker Night</h2>
+                    <p class="text-lg text-gray-600 mb-6">Welcome to the game guide! Click on any game from the list on the left to see its rules. The dealer chooses the game for each hand. This interactive guide is designed to help you quickly find the rules you need so you can get back to the action.</p>
+                    <div class="bg-yellow-100 border-l-4 border-yellow-500 text-yellow-800 p-4 rounded-r-lg">
+                        <p><strong class="font-bold">House Rule:</strong> When in doubt, the dealer has the final say. Good luck and have fun!</p>
+                    </div>
+                </div>
+
+                <!-- Game Rule Cards -->
+                <div id="game-baseball" class="game-content hidden bg-white p-8 rounded-xl shadow-2xl border-l-8 border-red-800">
+                    <h2 class="text-3xl font-bold font-serif mb-2 text-gray-900">1. Baseball ⚾</h2>
+                    <p class="italic text-gray-600 mb-6">A 7-Card Stud game with specific wild cards.</p>
+                    
+                    <h3 class="text-xl font-bold text-red-800 mb-3">How to Play</h3>
+                    <p class="mb-6">Each player is dealt 7 cards (2 down, 4 up, 1 down), with a round of betting after each face-up card is dealt. The goal is to make the best 5-card poker hand.</p>
+                    
+                    <h3 class="text-xl font-bold text-red-800 mb-3">Special Rules</h3>
+                    <ul class="list-disc list-inside space-y-2">
+                        <li><strong>3s and 9s are Wild:</strong> Any 3 or 9 can be used as any card.</li>
+                        <li><strong>4s Get an Extra Card:</strong> If you are dealt a 4 face-up, you must immediately pay a set amount (e.g., a dime) to the pot to receive one extra card dealt face down.</li>
+                    </ul>
+                </div>
+
+                <div id="game-cross" class="game-content hidden bg-white p-8 rounded-xl shadow-2xl border-l-8 border-red-800">
+                    <h2 class="text-3xl font-bold font-serif mb-2 text-gray-900">2. The Cross 十字</h2>
+                    <p class="italic text-gray-600 mb-6">A community card game where you use a shared cross of cards.</p>
+                    <h3 class="text-xl font-bold text-red-800 mb-3">How to Play</h3>
+                    <ol class="list-decimal list-inside space-y-2">
+                        <li>Each player is dealt four cards face down, followed by a round of betting.</li>
+                        <li>The dealer lays out five community cards face down in the shape of a cross.</li>
+                        <li>The dealer reveals the cards line by line (horizontal or vertical), with a betting round after each reveal.</li>
+                        <li>Players must make the best 5-card hand using <strong>two</strong> cards from their hand combined with the three cards from <strong>either</strong> the horizontal line <strong>or</strong> the vertical line of the cross.</li>
+                    </ol>
+                </div>
+
+                <div id="game-queen" class="game-content hidden bg-white p-8 rounded-xl shadow-2xl border-l-8 border-red-800">
+                    <h2 class="text-3xl font-bold font-serif mb-2 text-gray-900">3. Follow the Queen 👑</h2>
+                    <p class="italic text-gray-600 mb-6">A 7-Card Stud game with a wild card that can change at any moment.</p>
+                    <h3 class="text-xl font-bold text-red-800 mb-3">How to Play</h3>
+                    <p class="mb-6">Played exactly like standard 7-Card Stud.</p>
+                    <h3 class="text-xl font-bold text-red-800 mb-3">Special Rules</h3>
+                    <ul class="list-disc list-inside space-y-2">
+                        <li>All Queens are wild.</li>
+                        <li>The card dealt face-up <em>immediately following</em> a Queen is also wild for all players.</li>
+                        <li>If another Queen is dealt face-up later in the hand, the wild card designation shifts to whatever new card follows it.</li>
+                    </ul>
+                </div>
+
+                <div id="game-gurdy" class="game-content hidden bg-white p-8 rounded-xl shadow-2xl border-l-8 border-red-800">
+                    <h2 class="text-3xl font-bold font-serif mb-2 text-gray-900">4. Dirty Gurdy ☠️</h2>
+                    <p class="italic text-gray-600 mb-6">A 7-Card Stud game with a "poison" card that resets the hand.</p>
+                    <h3 class="text-xl font-bold text-red-800 mb-3">How to Play</h3>
+                    <p class="mb-6">Played exactly like standard 7-Card Stud.</p>
+                    <h3 class="text-xl font-bold text-red-800 mb-3">Special Rule</h3>
+                    <ul class="list-disc list-inside space-y-2">
+                        <li>If the <strong>Queen of Spades (Q♠)</strong> is dealt to any player face-up, the hand is immediately dead.</li>
+                        <li>All cards are discarded, everyone re-antes, and the pot from the dead hand is carried over to the new deal, creating a larger pot.</li>
+                    </ul>
+                </div>
+
+                <div id="game-trash" class="game-content hidden bg-white p-8 rounded-xl shadow-2xl border-l-8 border-red-800">
+                    <h2 class="text-3xl font-bold font-serif mb-2 text-gray-900">5. Pass the Trash ♻️</h2>
+                    <p class="italic text-gray-600 mb-6">A 7-card game where you try to build the best hand while passing your unwanted cards.</p>
+                    <h3 class="text-xl font-bold text-red-800 mb-3">How to Play</h3>
+                    <ol class="list-decimal list-inside space-y-2">
+                        <li>Each player is dealt seven cards.</li>
+                        <li>Players select three cards to pass to the player on their left. A round of betting follows.</li>
+                        <li>This is typically followed by passing two cards, betting, then passing one final card, followed by a final betting round.</li>
+                        <li>The player with the best 5-card poker hand wins.</li>
+                    </ol>
+                </div>
+
+                <div id="game-anaconda" class="game-content hidden bg-white p-8 rounded-xl shadow-2xl border-l-8 border-red-800">
+                    <h2 class="text-3xl font-bold font-serif mb-2 text-gray-900">6. Anaconda 🐍</h2>
+                    <p class="italic text-gray-600 mb-6">A fast and simple game of nerve where losers pay big.</p>
+                    <h3 class="text-xl font-bold text-red-800 mb-3">How to Play</h3>
+                    <ol class="list-decimal list-inside space-y-2">
+                        <li>Each player is dealt two cards face down.</li>
+                        <li>Simultaneously, all players declare if they are "in" or "out" for the hand.</li>
+                        <li>The players who are "in" reveal their hands. The best high hand (e.g., a pair) wins the pot.</li>
+                    </ol>
+                    <div class="mt-6 bg-red-100 border-l-4 border-red-500 text-red-800 p-4 rounded-r-lg">
+                        <p><strong class="font-bold">The Catch:</strong> All players who stayed "in" but lost must <strong>match the amount that was in the pot</strong>, creating a huge pot for the next hand.</p>
+                    </div>
+                </div>
+                
+                <div id="game-acey" class="game-content hidden bg-white p-8 rounded-xl shadow-2xl border-l-8 border-red-800">
+                    <h2 class="text-3xl font-bold font-serif mb-2 text-gray-900">7. Acey-Deucey ♠️ACE DEUCE♦️</h2>
+                    <p class="italic text-gray-600 mb-6">A game of chance played between each player and the pot.</p>
+                    <h3 class="text-xl font-bold text-red-800 mb-3">How to Play</h3>
+                     <ol class="list-decimal list-inside space-y-2">
+                        <li>The pot is started with an ante from each player.</li>
+                        <li>The dealer deals two cards face-up to the player on their left.</li>
+                        <li>That player can bet any amount (from the minimum bet up to the total value of the pot) that the next card dealt will fall <em>between</em> the values of their two cards.</li>
+                        <li><strong>Win:</strong> The player takes their wager from the pot.</li>
+                        <li><strong>Lose:</strong> The player pays their wager into the pot. (Hitting one of the card values is a loss).</li>
+                        <li>Play moves to the next person.</li>
+                    </ol>
+                </div>
+
+                <div id="game-diamond" class="game-content hidden bg-white p-8 rounded-xl shadow-2xl border-l-8 border-red-800">
+                    <h2 class="text-3xl font-bold font-serif mb-2 text-gray-900">8. 7-Card Stud High Diamond ♦️</h2>
+                    <p class="italic text-gray-600 mb-6">A split-pot game with a unique twist and a penalty for losers.</p>
+                     <h3 class="text-xl font-bold text-red-800 mb-3">How to Play</h3>
+                    <p class="mb-6">Played as a standard game of 7-Card Stud. At the showdown, the pot is split into two equal halves.</p>
+                    <h3 class="text-xl font-bold text-red-800 mb-3">Winning the Pot</h3>
+                    <ul class="list-disc list-inside space-y-2">
+                        <li><strong>Half the pot</strong> goes to the player with the best 5-card poker hand.</li>
+                        <li><strong>The other half</strong> goes to the player holding the single highest-ranking Diamond in their 7-card hand (Ace is high).</li>
+                    </ul>
+                     <div class="mt-6 bg-red-100 border-l-4 border-red-500 text-red-800 p-4 rounded-r-lg">
+                        <p><strong class="font-bold">The Penalty:</strong> Any player at the showdown who does not win either half of the pot must <strong>match the entire pot</strong>. This pot is then carried over to the next hand.</p>
+                    </div>
+                </div>
+
+                <div id="game-ace" class="game-content hidden bg-white p-8 rounded-xl shadow-2xl border-l-8 border-red-800">
+                    <h2 class="text-3xl font-bold font-serif mb-2 text-gray-900">9. Chase the Ace 🏃‍♂️💨</h2>
+                    <p class="italic text-gray-600 mb-6">A one-card elimination game where the goal is to not be last.</p>
+                    <h3 class="text-xl font-bold text-red-800 mb-3">Objective & Setup</h3>
+                    <p class="mb-6">To avoid having the lowest card and be the last player with "lives" remaining. Each player starts with three quarters in front of them as their "lives."</p>
+                    <h3 class="text-xl font-bold text-red-800 mb-3">How to Play</h3>
+                    <ol class="list-decimal list-inside space-y-2">
+                        <li>The dealer gives one card to each player. Kings are "safe" and are turned face-up immediately.</li>
+                        <li>Starting to the dealer's left, each player can either keep their card or trade it with the person to their left (who must accept, unless they have a King).</li>
+                        <li>The dealer can trade their card for the top card of the deck.</li>
+                        <li>Everyone reveals their card. The player with the lowest card (Ace is low) puts one of their quarters in the pot.</li>
+                        <li>The last player with quarters left wins the entire pot.</li>
+                    </ol>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const navLinks = document.querySelectorAll('#game-nav .nav-link');
+            const gameContents = document.querySelectorAll('.game-content');
+            const introContent = document.getElementById('game-intro');
+
+            function showContent(targetId) {
+                gameContents.forEach(content => {
+                    if (content.id === targetId) {
+                        content.classList.remove('hidden');
+                    } else {
+                        content.classList.add('hidden');
+                    }
+                });
+                 if(targetId) {
+                    introContent.classList.add('hidden');
+                } else {
+                    introContent.classList.remove('hidden');
+                }
+            }
+
+            navLinks.forEach(link => {
+                link.addEventListener('click', function(event) {
+                    event.preventDefault();
+                    
+                    navLinks.forEach(l => l.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    const targetId = this.getAttribute('data-target');
+                    showContent(targetId);
+                });
+            });
+            
+            showContent('game-baseball');
+            document.querySelector('.nav-link[data-target="game-baseball"]').classList.add('active');
+            introContent.classList.add('hidden');
+
+        });
+    </script>
+
+</body>
+</html>
