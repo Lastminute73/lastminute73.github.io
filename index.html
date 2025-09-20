@@ -3,250 +3,377 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dealer's Choice Poker Night Guide</title>
+    <title>Monster Jam Family Costume Planner</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Chosen Palette: Classic Casino (Stone, Deep Red, Gold) -->
-    <!-- Application Structure Plan: A two-column layout with a fixed navigation sidebar listing all games. Clicking a game name dynamically shows its rules in the main content area. This is chosen over a simple scrollable document for rapid, on-the-fly rule lookup during a fast-paced game night, enhancing usability by providing instant access to specific information. -->
-    <!-- Visualization & Content Choices: Game: Rules Text -> Goal: Organize/Inform -> Viz: Structured HTML/CSS Cards -> Interaction: Click-to-reveal via JS. Justification: No quantitative data exists, so charts are unnecessary. This interactive card system is the most direct and user-friendly way to present distinct blocks of text-based rules, avoiding scrolling and searching. Method: Vanilla JS, Tailwind CSS, Unicode icons. Confirmed NO SVG/Mermaid. -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Warm Neutrals with Earthshaker Yellow Accent -->
+    <!-- Application Structure Plan: The application uses a task-oriented, tabbed navigation structure ('Overview', 'The Truck', 'The Pit Crew', 'Shopping List') to break the complex project into manageable parts. This is more user-friendly than a single long document, allowing the user to focus on one aspect at a time, such as building the truck or planning the costumes. The 'Overview' tab acts as a central dashboard with an interactive checklist and progress bar, providing immediate feedback on project completion. This structure was chosen to guide the user through the planning and execution phases logically and interactively. -->
+    <!-- Visualization & Content Choices: 
+        - Project Checklist (HTML/JS): Goal: Organize/Track. Interaction: Users check items, triggering a dynamic progress bar. Justification: Provides a tangible sense of accomplishment and a clear overview of remaining tasks.
+        - Progress Bar (HTML/CSS/JS): Goal: Show Change. Interaction: Width updates based on checklist completion. Justification: Visually represents progress, making the project feel more engaging.
+        - Filterable Shopping List (HTML/JS): Goal: Organize. Interaction: Users click category buttons to filter the list. Justification: Simplifies the shopping process by allowing focus on specific item categories (e.g., only truck parts).
+        - Cost Breakdown Donut Chart (Chart.js/Canvas): Goal: Inform/Compare. Interaction: Tooltips on hover provide cost details. Justification: Offers a quick, visual summary of the budget allocation between the main costume elements (truck vs. crew), helping with financial planning. 
+    -->
     <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
     <style>
         body {
-            font-family: "Comic Sans MS", "Comic Sans", cursive;
+            font-family: 'Inter', sans-serif;
+            background-color: #FDFBF8;
+            color: #3D352E;
         }
-        .nav-link.active {
-            background-color: #ca8a04; /* yellow-500 */
-            color: black;
+        .tab-active {
+            border-color: #FECB2E;
+            background-color: #FFFBEB;
+            color: #3D352E;
+            font-weight: 600;
         }
-        .border-3d {
-            border: 2px solid;
-            border-color: #f0f0f0 #606060 #606060 #f0f0f0;
-            box-shadow: 1px 1px 3px rgba(0,0,0,0.3);
+        .tab-inactive {
+            border-color: transparent;
+            color: #7A6A5C;
         }
-        .border-3d-inset {
-             border: 2px solid;
-             border-color: #606060 #f0f0f0 #f0f0f0 #606060;
+        .progress-bar-fill {
+            transition: width 0.5s ease-in-out;
         }
-        @keyframes marquee {
-            0% { transform: translateX(100%); }
-            100% { transform: translateX(-100%); }
+        .card {
+            background-color: #FFFFFF;
+            border: 1px solid #EAE5E0;
+            border-radius: 0.75rem;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.05), 0 2px 4px -2px rgb(0 0 0 / 0.05);
         }
-        .marquee-text {
-            display: inline-block;
-            white-space: nowrap;
-            animation: marquee 13s linear infinite;
-            padding-left: 100%;
-        }
-        .marquee-container {
+        .chart-container {
+            position: relative;
             width: 100%;
-            overflow: hidden;
+            max-width: 400px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 300px;
+            max-height: 400px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 350px;
+            }
         }
     </style>
-     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Comic+Sans+MS&family=Impact&display=swap" rel="stylesheet">
-
 </head>
-<body class="bg-gray-300 text-black">
+<body class="antialiased">
+    <div class="container mx-auto p-4 md:p-8 max-w-6xl">
+        <header class="text-center mb-8">
+            <h1 class="text-4xl md:text-5xl font-bold text-gray-800">Project: Monster Jam Halloween</h1>
+            <p class="mt-2 text-lg text-gray-600">A complete guide to creating an Earthshaker truck and Pit Crew family costume.</p>
+        </header>
 
-    <div class="flex flex-col md:flex-row min-h-screen">
-        <!-- Sidebar Navigation -->
-        <nav class="w-full md:w-64 bg-blue-800 text-white p-4 md:p-6 border-r-2 border-black">
-            <ul class="space-y-2 mb-6">
-                 <li><a href="#" class="nav-link block py-2 px-4 border-2 border-transparent hover:border-white text-xl" data-target="game-cover">🏠 Welcome</a></li>
-            </ul>
-            <h1 class="text-2xl text-yellow-300 mb-6 border-b-2 border-yellow-400 pb-2" style="font-family: Impact, sans-serif;">🃏 GAME LIST</h1>
-            <ul id="game-nav" class="space-y-2">
-                <li><a href="#" class="nav-link block py-2 px-4 border-2 border-transparent hover:border-white" data-target="game-baseball">1. Baseball</a></li>
-                <li><a href="#" class="nav-link block py-2 px-4 border-2 border-transparent hover:border-white" data-target="game-cross">2. The Cross</a></li>
-                <li><a href="#" class="nav-link block py-2 px-4 border-2 border-transparent hover:border-white" data-target="game-queen">3. Follow the Queen</a></li>
-                <li><a href="#" class="nav-link block py-2 px-4 border-2 border-transparent hover:border-white" data-target="game-gurdy">4. Dirty Gurdy</a></li>
-                <li><a href="#" class="nav-link block py-2 px-4 border-2 border-transparent hover:border-white" data-target="game-trash">5. Pass the Trash</a></li>
-                <li><a href="#" class="nav-link block py-2 px-4 border-2 border-transparent hover:border-white" data-target="game-anaconda">6. Anaconda</a></li>
-                <li><a href="#" class="nav-link block py-2 px-4 border-2 border-transparent hover:border-white" data-target="game-acey">7. Acey-Deucey</a></li>
-                <li><a href="#" class="nav-link block py-2 px-4 border-2 border-transparent hover:border-white" data-target="game-diamond">8. 7-Card Stud High Diamond</a></li>
-                <li><a href="#" class="nav-link block py-2 px-4 border-2 border-transparent hover:border-white" data-target="game-ace">9. Chase the Ace</a></li>
-            </ul>
+        <nav class="flex justify-center border-b-2 border-gray-200 mb-8 space-x-2 md:space-x-4">
+            <button data-tab="overview" class="tab-btn text-sm md:text-base py-3 px-4 md:px-6 border-b-4 tab-active">Overview & Checklist</button>
+            <button data-tab="truck" class="tab-btn text-sm md:text-base py-3 px-4 md:px-6 border-b-4 tab-inactive">The Truck: Earthshaker</button>
+            <button data-tab="crew" class="tab-btn text-sm md:text-base py-3 px-4 md:px-6 border-b-4 tab-inactive">The Pit Crew</button>
+            <button data-tab="shopping" class="tab-btn text-sm md:text-base py-3 px-4 md:px-6 border-b-4 tab-inactive">Shopping List</button>
         </nav>
 
-        <!-- Main Content Area -->
-        <main class="flex-1 p-6 md:p-10">
-            <div id="game-content-area">
-                <!-- Cover Page -->
-                 <div id="game-cover" class="game-content bg-gray-200 p-8 text-center flex flex-col justify-center items-center h-full border-3d">
-                    <div class="marquee-container">
-                        <h2 class="text-5xl font-bold text-red-600 marquee-text" style="font-family: Impact, sans-serif;">Dealer's Choice Poker Night!</h2>
+        <main>
+            <div id="overview" class="tab-content">
+                <section>
+                    <h2 class="text-2xl font-bold mb-4 text-center">Project Dashboard</h2>
+                    <p class="text-center text-gray-600 max-w-3xl mx-auto mb-8">This is your mission control for the project. The plan is to transform a yellow Power Wheels into the Earthshaker monster truck for your son, while the rest of the family becomes his dedicated pit crew. Use the checklist below to track your progress from start to finish!</p>
+                    <div class="card p-6 mb-8">
+                        <h3 class="text-xl font-semibold mb-4">Project Progress</h3>
+                        <div class="w-full bg-gray-200 rounded-full h-6">
+                            <div id="progressBar" class="progress-bar-fill bg-yellow-400 h-6 rounded-full text-center text-gray-800 font-bold flex items-center justify-center" style="width: 0%;">
+                                <span id="progressText">0%</span>
+                            </div>
+                        </div>
                     </div>
-                    <p class="text-xl text-black mt-4 mb-6">Hosted by Zach & Becca</p>
-                    <p class="text-lg max-w-2xl mx-auto">An afternoon of low-stakes cards, classic games, and good company. Get ready for a friendly competition with all the old-school rules.</p>
-                    <hr class="w-full my-4 border-gray-400">
-                    <p class="text-3xl font-bold mb-2">Saturday, September 13th</p>
-                    <p class="text-3xl font-bold mb-8">2:00 PM</p>
-                    <div class="text-6xl my-8">
-                        <span class="inline-block animate-spin" style="animation-duration: 5s;">🃏</span>
-                        <span class="text-red-600">♦️</span>
-                        <span>♣️</span>
-                        <span class="text-red-600">♥️</span>
-                        <span>♠️</span>
+                    <div class="card p-6">
+                        <h3 class="text-xl font-semibold mb-4">Master Checklist</h3>
+                        <div id="checklist" class="space-y-3"></div>
                     </div>
-                    <p class="mt-8 text-sm text-gray-600">Click a game on the left to see the rules.</p>
-                </div>
+                </section>
+            </div>
 
-                <!-- Game Rule Cards -->
-                <div id="game-baseball" class="game-content hidden bg-gray-200 p-8 border-3d">
-                    <h2 class="text-3xl font-bold mb-2 text-blue-800" style="font-family: Impact, sans-serif;">1. Baseball ⚾</h2>
-                    <p class="italic text-gray-700 mb-6">A 7-Card Stud variant with wild cards and special rules.</p>
-                    
-                    <h3 class="text-xl font-bold text-black mb-3">Game Play</h3>
-                    <p class="mb-6">The game follows the structure of 7-Card Stud. Each player receives two cards face-down and one card face-up, followed by a betting round. Three more cards are dealt face-up one at a time, with a betting round after each. The final card is dealt face-down, followed by a final betting round. Players then form their best 5-card hand.</p>
-                    
-                    <h3 class="text-xl font-bold text-black mb-3">Special Rules</h3>
-                    <ul class="list-disc list-inside space-y-2">
-                        <li><strong>Wild Cards:</strong> All 3s and 9s are wild.</li>
-                        <li><strong>Buy a Card:</strong> If a player is dealt a 4 face-up, they must pay a fee to the pot to receive an additional card face-down.</li>
-                    </ul>
-                </div>
-
-                <div id="game-cross" class="game-content hidden bg-gray-200 p-8 border-3d">
-                    <h2 class="text-3xl font-bold mb-2 text-blue-800" style="font-family: Impact, sans-serif;">2. The Cross 十字</h2>
-                    <p class="italic text-gray-700 mb-6">A community card game using a cross-shaped board.</p>
-                    <h3 class="text-xl font-bold text-black mb-3">Game Play</h3>
-                    <ol class="list-decimal list-inside space-y-2">
-                        <li>Each player is dealt four private cards face-down (hole cards). A round of betting occurs.</li>
-                        <li>The dealer places five community cards face-down in a cross formation (one center, four arms).</li>
-                        <li>The cards are revealed one section at a time (e.g., the horizontal row, then the vertical row), with a betting round after each reveal.</li>
-                        <li>To make their hand, players must use exactly **two** of their hole cards with the three cards forming **either** the horizontal or vertical line of the cross.</li>
-                    </ol>
-                </div>
-
-                <div id="game-queen" class="game-content hidden bg-gray-200 p-8 border-3d">
-                    <h2 class="text-3xl font-bold mb-2 text-blue-800" style="font-family: Impact, sans-serif;">3. Follow the Queen 👑</h2>
-                    <p class="italic text-gray-700 mb-6">A 7-Card Stud variant with a dynamic wild card.</p>
-                    <h3 class="text-xl font-bold text-black mb-3">Game Play</h3>
-                    <p class="mb-6">This game is played identically to standard 7-Card Stud.</p>
-                    <h3 class="text-xl font-bold text-black mb-3">Wild Card Rules</h3>
-                    <ul class="list-disc list-inside space-y-2">
-                        <li>All Queens are always wild.</li>
-                        <li>The next card dealt face-up immediately after a Queen also becomes wild for all players.</li>
-                        <li>If a subsequent Queen is dealt face-up, the previous "follower" card is no longer wild, and this new Queen's follower becomes the new wild card.</li>
-                    </ul>
-                </div>
-
-                <div id="game-gurdy" class="game-content hidden bg-gray-200 p-8 border-3d">
-                    <h2 class="text-3xl font-bold mb-2 text-blue-800" style="font-family: Impact, sans-serif;">4. Dirty Gurdy ☠️</h2>
-                    <p class="italic text-gray-700 mb-6">A special condition applied to 7-Card Stud that can void the hand.</p>
-                    <h3 class="text-xl font-bold text-black mb-3">Game Play</h3>
-                    <p class="mb-6">Played as a standard game of 7-Card Stud.</p>
-                    <h3 class="text-xl font-bold text-black mb-3">The Queen of Spades Rule</h3>
-                    <ul class="list-disc list-inside space-y-2">
-                        <li>If the **Queen of Spades (Q♠)** is dealt face-up to any player at any time, the hand is immediately declared dead.</li>
-                        <li>All cards are collected, the pot remains, everyone must ante again, and a new hand is dealt by the same dealer.</li>
-                    </ul>
-                </div>
-
-                <div id="game-trash" class="game-content hidden bg-gray-200 p-8 border-3d">
-                    <h2 class="text-3xl font-bold mb-2 text-blue-800" style="font-family: Impact, sans-serif;">5. Pass the Trash ♻️</h2>
-                    <p class="italic text-gray-700 mb-6">A game where players pass cards to improve their hand.</p>
-                    <h3 class="text-xl font-bold text-black mb-3">Game Play</h3>
-                    <ol class="list-decimal list-inside space-y-2">
-                        <li>Each player is dealt a hand of seven cards.</li>
-                        <li>Players choose three cards to pass to the player on their left. A round of betting occurs after everyone has received their new cards.</li>
-                        <li>Typically, this is followed by a round of passing two cards, another betting round, and a final round of passing one card and betting.</li>
-                        <li>After all passes, players form their best 5-card poker hand to determine the winner.</li>
-                    </ol>
-                </div>
-
-                <div id="game-anaconda" class="game-content hidden bg-gray-200 p-8 border-3d">
-                    <h2 class="text-3xl font-bold mb-2 text-blue-800" style="font-family: Impact, sans-serif;">6. Anaconda 🐍</h2>
-                    <p class="italic text-gray-700 mb-6">A simple game of nerve where losing can be costly.</p>
-                    <h3 class="text-xl font-bold text-black mb-3">Game Play</h3>
-                    <ol class="list-decimal list-inside space-y-2">
-                        <li>Each player is dealt two cards face-down.</li>
-                        <li>On a count of three, all players who wish to compete for the pot simultaneously declare they are "in" (often by holding their cards out). Players who fold pull their cards back.</li>
-                        <li>The players who remained "in" reveal their hands. The best high hand wins the pot.</li>
-                    </ol>
-                    <div class="mt-6 bg-yellow-200 text-black p-4 border-3d-inset">
-                        <p><strong class="font-bold">The Catch:</strong> Any player who stayed in the hand but did not win must pay a penalty to the next pot equal to the full amount of the pot that was just won.</p>
+            <div id="truck" class="tab-content hidden">
+                 <section>
+                    <h2 class="text-2xl font-bold mb-4 text-center">Building the Earthshaker</h2>
+                    <p class="text-center text-gray-600 max-w-3xl mx-auto mb-8">This section covers the transformation of a standard Power Wheels into a Monster Jam star. We'll go over finding the right base, painting, applying decals, and adding custom touches to make it look authentic.</p>
+                    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <div class="card p-6">
+                            <h3 class="text-lg font-bold mb-2">1. Find a Base Truck</h3>
+                            <p class="text-gray-600">The ideal base is a yellow, truck-style Power Wheels. A construction dump truck is perfect. Look on Facebook Marketplace or Craigslist for used models to save money. The key is the yellow body and large wheels.</p>
+                        </div>
+                        <div class="card p-6">
+                            <h3 class="text-lg font-bold mb-2">2. Prep & Paint</h3>
+                            <p class="text-gray-600">Clean all plastic surfaces thoroughly with soap and water, then wipe with isopropyl alcohol. Use a spray paint designed for plastic (like Krylon Fusion) for the best results. You'll need black for the chassis/undercarriage and silver for the "engine" parts.</p>
+                        </div>
+                        <div class="card p-6">
+                            <h3 class="text-lg font-bold mb-2">3. Graphics & Decals</h3>
+                            <p class="text-gray-600">Design or download Earthshaker logos. You can print them on adhesive vinyl paper at home or at a local print shop. Key graphics include the "Earthshaker" text, sponsor logos (like BKT), and the monster truck's "eyes" on the front.</p>
+                        </div>
+                        <div class="card p-6 lg:col-span-2">
+                            <h3 class="text-lg font-bold mb-2">4. Custom Dump Bed</h3>
+                            <p class="text-gray-600">Earthshaker's most iconic feature is its massive dump bed. You can construct a lightweight version using cardboard boxes. Cut and tape them into shape, then paint with yellow plastic-fusion spray paint to match the truck body. Reinforce corners with duct tape on the inside for durability.</p>
+                        </div>
+                        <div class="card p-6">
+                            <h3 class="text-lg font-bold mb-2">5. Finishing Touches</h3>
+                            <p class="text-gray-600">Add details like a "supercharged engine" in the truck bed using painted cardboard boxes and plastic tubes. Consider adding small orange flags on poles attached to the back for an authentic arena feel.</p>
+                        </div>
                     </div>
-                </div>
-                
-                <div id="game-acey" class="game-content hidden bg-gray-200 p-8 border-3d">
-                    <h2 class="text-3xl font-bold mb-2 text-blue-800" style="font-family: Impact, sans-serif;">7. Acey-Deucey ♠️ACE DEUCE♦️</h2>
-                    <p class="italic text-gray-700 mb-6">A betting game where players wager against the pot.</p>
-                    <h3 class="text-xl font-bold text-black mb-3">Game Play</h3>
-                     <ol class="list-decimal list-inside space-y-2">
-                        <li>Each player contributes an ante to start the pot.</li>
-                        <li>In turn, starting to the dealer's left, each player is dealt two cards face-up.</li>
-                        <li>The player may bet any amount, up to the current total of the pot, that the third card dealt will have a rank that falls between the first two.</li>
-                        <li>**Winning Bet:** The player collects their wager from the pot.</li>
-                        <li>**Losing Bet:** The player must pay their wager into the pot. A bet is lost if the third card is outside the range or matches the rank of either of the first two cards ("hitting the post").</li>
-                    </ol>
-                </div>
+                </section>
+            </div>
 
-                <div id="game-diamond" class="game-content hidden bg-gray-200 p-8 border-3d">
-                    <h2 class="text-3xl font-bold mb-2 text-blue-800" style="font-family: Impact, sans-serif;">8. 7-Card Stud High Diamond ♦️</h2>
-                    <p class="italic text-gray-700 mb-6">A split-pot variant of 7-Card Stud with a penalty for non-winners.</p>
-                     <h3 class="text-xl font-bold text-black mb-3">Game Play</h3>
-                    <p class="mb-6">Played as a standard game of 7-Card Stud. At the showdown, the pot is divided equally between two winners.</p>
-                    <h3 class="text-xl font-bold text-black mb-3">Winning Conditions</h3>
-                    <ul class="list-disc list-inside space-y-2">
-                        <li><strong>High Hand:</strong> One half of the pot is awarded to the player with the best traditional 5-card poker hand.</li>
-                        <li><strong>High Diamond:</strong> The other half is awarded to the player who holds the single highest-ranking card of the Diamond suit among their seven cards (Ace of Diamonds is the highest possible).</li>
-                    </ul>
-                     <div class="mt-6 bg-yellow-200 text-black p-4 border-3d-inset">
-                        <p><strong class="font-bold">The Penalty:</strong> At the showdown, any player who does not win either the High Hand or the High Diamond must match the entire pot, which carries over to the next hand.</p>
+            <div id="crew" class="tab-content hidden">
+                <section>
+                    <h2 class="text-2xl font-bold mb-4 text-center">Assembling the Pit Crew</h2>
+                    <p class="text-center text-gray-600 max-w-3xl mx-auto mb-8">Every great driver needs a great team. This section outlines costume ideas for Mom, Dad, and the newest, tiniest crew member. The goal is a coordinated, comfortable, and fun look for the whole family.</p>
+                    <div class="grid md:grid-cols-1 lg:grid-cols-3 gap-6">
+                        <div class="card p-6">
+                            <h3 class="text-lg font-bold mb-2">Dad's Pit Crew Gear</h3>
+                             <ul class="list-disc list-inside text-gray-600 space-y-2">
+                                <li><strong>Jumpsuit:</strong> A simple tan or navy work jumpsuit (e.g., from Dickies or Red Kap).</li>
+                                <li><strong>Hat:</strong> A black or yellow baseball cap with a Monster Jam or a tool brand patch.</li>
+                                <li><strong>Accessories:</strong> Toy tool belt, safety glasses, and maybe some grease smudges on the face (using makeup) for effect.</li>
+                            </ul>
+                        </div>
+                        <div class="card p-6">
+                            <h3 class="text-lg font-bold mb-2">Mom's Pit Crew Gear</h3>
+                            <ul class="list-disc list-inside text-gray-600 space-y-2">
+                                <li><strong>Jumpsuit/Coveralls:</strong> Matching jumpsuit, or a combo of work pants and a branded t-shirt.</li>
+                                <li><strong>Headwear:</strong> A bandana or a matching baseball cap.</li>
+                                <li><strong>Accessories:</strong> A prop clipboard with a "pre-race checklist," a checkered flag, or a toy impact wrench.</li>
+                            </ul>
+                        </div>
+                        <div class="card p-6">
+                            <h3 class="text-lg font-bold mb-2">Baby Crew Chief</h3>
+                           <ul class="list-disc list-inside text-gray-600 space-y-2">
+                                <li><strong>Outfit:</strong> A comfortable brown or black onesie. Create an iron-on patch that says "Crew Chief".</li>
+                                <li><strong>Hat:</strong> A soft baby beanie or a tiny baseball cap.</li>
+                                <li><strong>Accessory:</strong> A soft, plush toy wrench or a pair of baby-sized noise-canceling headphones for the theme.</li>
+                            </ul>
+                        </div>
                     </div>
-                </div>
+                </section>
+            </div>
 
-                <div id="game-ace" class="game-content hidden bg-gray-200 p-8 border-3d">
-                    <h2 class="text-3xl font-bold mb-2 text-blue-800" style="font-family: Impact, sans-serif;">9. Chase the Ace 🏃‍♂️💨</h2>
-                    <p class="italic text-gray-700 mb-6">An elimination game where the goal is simply to not have the lowest card.</p>
-                    <h3 class="text-xl font-bold text-black mb-3">Objective & Setup</h3>
-                    <p class="mb-6">Be the last player with "lives" (quarters) remaining. Each player begins with three quarters placed in front of them.</p>
-                    <h3 class="text-xl font-bold text-black mb-3">Game Play</h3>
-                    <ol class="list-decimal list-inside space-y-2">
-                        <li>One card is dealt to each player. A player dealt a King is safe for the round and turns it face-up.</li>
-                        <li>Beginning with the player to the dealer's left, each player must either keep their card or trade it with the player to their left. The trade is mandatory for the receiving player unless they hold a King.</li>
-                        <li>The dealer has the final option, and may either keep their card or exchange it for the top card of the deck.</li>
-                        <li>All cards are revealed. The player with the lowest ranking card (Ace is low) loses a "life" and must place one quarter in the pot. The last player with quarters wins the pot.</li>
-                    </ol>
-                </div>
+            <div id="shopping" class="tab-content hidden">
+                 <section>
+                    <h2 class="text-2xl font-bold mb-4 text-center">Project Shopping List</h2>
+                    <p class="text-center text-gray-600 max-w-3xl mx-auto mb-8">Here is a consolidated list of all the items you'll need to buy or source. Use the filters to focus on what you're shopping for. The cost breakdown chart provides a visual overview of your project budget.</p>
+                    <div class="flex justify-center mb-6 space-x-2">
+                        <button class="filter-btn bg-yellow-400 text-gray-800 font-semibold py-2 px-4 rounded-lg" data-filter="all">All Items</button>
+                        <button class="filter-btn bg-gray-200 text-gray-700 py-2 px-4 rounded-lg" data-filter="Truck">Truck Parts</button>
+                        <button class="filter-btn bg-gray-200 text-gray-700 py-2 px-4 rounded-lg" data-filter="Crew">Crew Gear</button>
+                    </div>
+                    <div class="grid lg:grid-cols-3 gap-8">
+                        <div class="lg:col-span-2 card p-6">
+                             <h3 class="text-xl font-semibold mb-4">Purchase List</h3>
+                             <div class="overflow-x-auto">
+                                <table class="w-full text-left">
+                                    <thead class="bg-gray-50 border-b">
+                                        <tr>
+                                            <th class="p-3">Item</th>
+                                            <th class="p-3">Category</th>
+                                            <th class="p-3 text-right">Est. Cost</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="shoppingListBody"></tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="card p-6">
+                            <h3 class="text-xl font-semibold mb-4 text-center">Cost Breakdown</h3>
+                            <div class="chart-container">
+                                <canvas id="costChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </section>
             </div>
         </main>
     </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const navLinks = document.querySelectorAll('nav .nav-link');
-            const gameContents = document.querySelectorAll('.game-content');
+        const projectData = {
+            checklist: [
+                { text: "Source yellow Power Wheels truck", completed: false },
+                { text: "Purchase all paints and supplies", completed: false },
+                { text: "Clean and prep Power Wheels for painting", completed: false },
+                { text: "Paint chassis and engine details", completed: false },
+                { text: "Design and print Earthshaker decals", completed: false },
+                { text: "Apply all decals to the truck", completed: false },
+                { text: "Construct and paint cardboard dump bed", completed: false },
+                { text: "Attach dump bed and finishing touches", completed: false },
+                { text: "Acquire adult pit crew jumpsuits", completed: false },
+                { text: "Get hats and accessories for adults", completed: false },
+                { text: "Create 'Crew Chief' infant costume", completed: false },
+                { text: "Final costume fitting for everyone", completed: false }
+            ],
+            shoppingList: [
+                { item: "Used Yellow Power Wheels Truck", category: "Truck", cost: 100 },
+                { item: "Plastic Fusion Spray Paint (Yellow, Black, Silver)", category: "Truck", cost: 25 },
+                { item: "Adhesive Vinyl Paper", category: "Truck", cost: 15 },
+                { item: "Large Cardboard Boxes", category: "Truck", cost: 0 },
+                { item: "Duct Tape & Hot Glue", category: "Truck", cost: 10 },
+                { item: "Adult Work Jumpsuits (x2)", category: "Crew", cost: 80 },
+                { item: "Baseball Caps (x2)", category: "Crew", cost: 20 },
+                { item: "Toy Tool Belts / Props", category: "Crew", cost: 25 },
+                { item: "Brown Infant Onesie", category: "Crew", cost: 10 },
+                { item: "Iron-on Transfer Paper", category: "Crew", cost: 10 },
+                { item: "Soft Baby Beanie", category: "Crew", cost: 5 },
+            ]
+        };
 
-            function showContent(targetId) {
-                gameContents.forEach(content => {
-                    if (content.id === targetId) {
-                        content.classList.remove('hidden');
-                    } else {
-                        content.classList.add('hidden');
-                    }
-                });
-            }
+        const tabs = document.querySelectorAll('.tab-btn');
+        const contents = document.querySelectorAll('.tab-content');
+        const checklistContainer = document.getElementById('checklist');
+        const progressBar = document.getElementById('progressBar');
+        const progressText = document.getElementById('progressText');
+        const shoppingListBody = document.getElementById('shoppingListBody');
+        const filterBtns = document.querySelectorAll('.filter-btn');
 
-            navLinks.forEach(link => {
-                link.addEventListener('click', function(event) {
-                    event.preventDefault();
-                    
-                    navLinks.forEach(l => l.classList.remove('active'));
-                    this.classList.add('active');
-                    
-                    const targetId = this.getAttribute('data-target');
-                    showContent(targetId);
-                });
+        function updateProgress() {
+            const checkedItems = projectData.checklist.filter(item => item.completed).length;
+            const totalItems = projectData.checklist.length;
+            const percentage = totalItems > 0 ? Math.round((checkedItems / totalItems) * 100) : 0;
+            progressBar.style.width = `${percentage}%`;
+            progressText.textContent = `${percentage}%`;
+        }
+
+        function renderChecklist() {
+            checklistContainer.innerHTML = '';
+            projectData.checklist.forEach((item, index) => {
+                const div = document.createElement('div');
+                div.classList.add('flex', 'items-center');
+                const checkbox = document.createElement('input');
+                checkbox.type = 'checkbox';
+                checkbox.id = `item-${index}`;
+                checkbox.checked = item.completed;
+                checkbox.dataset.index = index;
+                checkbox.classList.add('h-5', 'w-5', 'rounded', 'border-gray-300', 'text-yellow-500', 'focus:ring-yellow-400');
+                
+                const label = document.createElement('label');
+                label.htmlFor = `item-${index}`;
+                label.textContent = item.text;
+                label.classList.add('ml-3', 'text-gray-700');
+                if (item.completed) {
+                    label.classList.add('line-through', 'text-gray-400');
+                }
+
+                div.appendChild(checkbox);
+                div.appendChild(label);
+                checklistContainer.appendChild(div);
             });
-            
-            showContent('game-cover');
-            document.querySelector('.nav-link[data-target="game-cover"]').classList.add('active');
-
+        }
+        
+        checklistContainer.addEventListener('change', (e) => {
+            if (e.target.type === 'checkbox') {
+                const index = e.target.dataset.index;
+                projectData.checklist[index].completed = e.target.checked;
+                renderChecklist();
+                updateProgress();
+            }
         });
-    </script>
 
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                tabs.forEach(item => {
+                    item.classList.remove('tab-active');
+                    item.classList.add('tab-inactive');
+                });
+                tab.classList.add('tab-active');
+                tab.classList.remove('tab-inactive');
+
+                contents.forEach(content => {
+                    content.classList.add('hidden');
+                });
+                document.getElementById(tab.dataset.tab).classList.remove('hidden');
+            });
+        });
+
+        function renderShoppingList(filter = 'all') {
+            shoppingListBody.innerHTML = '';
+            const filteredList = projectData.shoppingList.filter(item => filter === 'all' || item.category === filter);
+
+            filteredList.forEach(item => {
+                const row = document.createElement('tr');
+                row.classList.add('border-b');
+                row.innerHTML = `
+                    <td class="p-3">${item.item}</td>
+                    <td class="p-3">
+                        <span class="px-2 py-1 text-xs font-semibold rounded-full ${item.category === 'Truck' ? 'bg-yellow-100 text-yellow-800' : 'bg-blue-100 text-blue-800'}">
+                            ${item.category}
+                        </span>
+                    </td>
+                    <td class="p-3 text-right font-mono">$${item.cost.toFixed(2)}</td>
+                `;
+                shoppingListBody.appendChild(row);
+            });
+        }
+
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                filterBtns.forEach(b => b.classList.replace('bg-yellow-400', 'bg-gray-200'));
+                btn.classList.replace('bg-gray-200', 'bg-yellow-400');
+                renderShoppingList(btn.dataset.filter);
+            });
+        });
+
+        function renderCostChart() {
+            const ctx = document.getElementById('costChart').getContext('2d');
+            const truckCost = projectData.shoppingList
+                .filter(i => i.category === 'Truck')
+                .reduce((sum, i) => sum + i.cost, 0);
+            const crewCost = projectData.shoppingList
+                .filter(i => i.category === 'Crew')
+                .reduce((sum, i) => sum + i.cost, 0);
+
+            new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Truck Modification', 'Pit Crew Costumes'],
+                    datasets: [{
+                        data: [truckCost, crewCost],
+                        backgroundColor: ['#FECB2E', '#3D352E'],
+                        borderColor: '#FFFFFF',
+                        borderWidth: 4,
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: {
+                                padding: 20
+                            }
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    let label = context.label || '';
+                                    if (label) {
+                                        label += ': ';
+                                    }
+                                    if (context.parsed !== null) {
+                                        label += new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(context.parsed);
+                                    }
+                                    return label;
+                                }
+                            }
+                        }
+                    },
+                    cutout: '60%'
+                }
+            });
+        }
+
+        function init() {
+            renderChecklist();
+            updateProgress();
+            renderShoppingList();
+            renderCostChart();
+        }
+
+        init();
+    </script>
 </body>
 </html>
-
