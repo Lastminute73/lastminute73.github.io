@@ -7,14 +7,14 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-    <!-- Chosen Palette: Warm Neutrals with Earthshaker Yellow Accent -->
-    <!-- Application Structure Plan: The application uses a task-oriented, tabbed navigation structure ('Overview', 'The Truck', 'The Pit Crew', 'Shopping List', 'Creative Ideas') to break the project into manageable parts. The 'Creative Ideas' tab, powered by the Gemini API, was added to provide AI-driven inspiration for truck modifications and character backstories, enhancing the user's creative process. The 'Overview' tab remains a central dashboard. This structure guides the user logically while offering creative assistance. -->
+    <!-- Chosen Palette: Warm Neutrals with School Bus Yellow Accent -->
+    <!-- Application Structure Plan: The application uses a task-oriented, tabbed navigation structure ('Overview', 'The Truck', 'The Pit Crew', 'Shopping List', 'Creative Ideas') to break the project into manageable parts. This structure remains effective for the new "Classroom Crusher" theme, guiding the user through planning, building, and shopping. The 'Creative Ideas' tab is re-purposed with new AI prompts to generate theme-specific ideas for the school bus truck. -->
     <!-- Visualization & Content Choices: 
-        - Project Checklist (HTML/JS): Goal: Organize/Track. Interaction: Users check items, triggering a dynamic progress bar. Justification: Provides a tangible sense of accomplishment and a clear overview of remaining tasks.
-        - Progress Bar (HTML/CSS/JS): Goal: Show Change. Interaction: Width updates based on checklist completion. Justification: Visually represents progress.
-        - Filterable Shopping List (HTML/JS): Goal: Organize. Interaction: Category filters. Justification: Simplifies shopping.
-        - Cost Breakdown Donut Chart (Chart.js/Canvas): Goal: Inform/Compare. Interaction: Tooltips on hover. Justification: Visual budget summary.
-        - AI Idea Generation (Gemini API/JS): Goal: Inspire. Interaction: Button click calls LLM to generate creative ideas for truck upgrades and a crew backstory. Justification: Adds a dynamic, creative element that helps the user personalize their project beyond the initial plan.
+        - Project Checklist (HTML/JS): Goal: Organize/Track. Interaction: Check items to update progress. Justification: Provides a clear, step-by-step guide for the new truck build.
+        - Progress Bar (HTML/CSS/JS): Goal: Show Change. Interaction: Width updates based on checklist completion. Justification: Visually represents project progress.
+        - Filterable Shopping List (HTML/JS): Goal: Organize. Interaction: Category filters. Justification: Simplifies shopping for new materials like different paint colors.
+        - Cost Breakdown Donut Chart (Chart.js/Canvas): Goal: Inform/Compare. Interaction: Tooltips on hover. Justification: Visualizes the budget for the new theme.
+        - AI Idea Generation (Gemini API/JS): Goal: Inspire. Interaction: Button click calls LLM with updated prompts about the Classroom Crusher truck to generate relevant creative ideas. Justification: Adds a dynamic, creative element tailored to the user's new request.
     -->
     <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
     <style>
@@ -74,7 +74,7 @@
     <div class="container mx-auto p-4 md:p-8 max-w-6xl">
         <header class="text-center mb-8">
             <h1 class="text-4xl md:text-5xl font-bold text-gray-800">Project: Monster Jam Halloween</h1>
-            <p class="mt-2 text-lg text-gray-600">A complete guide to creating an Earthshaker truck and Pit Crew family costume.</p>
+            <p class="mt-2 text-lg text-gray-600">A complete guide to creating a Classroom Crusher truck and Pit Crew family costume.</p>
         </header>
 
         <nav class="flex flex-wrap justify-center border-b-2 border-gray-200 mb-8 space-x-2 md:space-x-4">
@@ -89,7 +89,7 @@
             <div id="overview" class="tab-content">
                 <section>
                     <h2 class="text-2xl font-bold mb-4 text-center">Project Dashboard</h2>
-                    <p class="text-center text-gray-600 max-w-3xl mx-auto mb-8">This is your mission control for the project. The plan is to transform a yellow Power Wheels into the Earthshaker monster truck for your son, while the rest of the family becomes his dedicated pit crew. Use the checklist below to track your progress from start to finish!</p>
+                    <p class="text-center text-gray-600 max-w-3xl mx-auto mb-8">This is your mission control for the project. The plan is to transform a Power Wheels into the Classroom Crusher monster truck for your son, while the rest of the family becomes his dedicated pit crew. Use the checklist below to track your progress from start to finish!</p>
                     <div class="card p-6 mb-8">
                         <h3 class="text-xl font-semibold mb-4">Project Progress</h3>
                         <div class="w-full bg-gray-200 rounded-full h-6">
@@ -107,28 +107,28 @@
 
             <div id="truck" class="tab-content hidden">
                  <section>
-                    <h2 class="text-2xl font-bold mb-4 text-center">Building the Earthshaker</h2>
-                    <p class="text-center text-gray-600 max-w-3xl mx-auto mb-8">This section covers the transformation of a standard Power Wheels into a Monster Jam star. We'll go over finding the right base, painting, applying decals, and adding custom touches to make it look authentic.</p>
+                    <h2 class="text-2xl font-bold mb-4 text-center">Building the Classroom Crusher</h2>
+                    <p class="text-center text-gray-600 max-w-3xl mx-auto mb-8">This section covers the transformation of a standard Power Wheels into a monster school bus. We'll go over building the bus body, painting, applying decals, and adding the classic school bus details.</p>
                     <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
                         <div class="card p-6">
-                            <h3 class="text-lg font-bold mb-2">1. Find a Base Truck</h3>
-                            <p class="text-gray-600">The ideal base is a yellow, truck-style Power Wheels. A construction dump truck is perfect. Look on Facebook Marketplace or Craigslist for used models to save money. The key is the yellow body and large wheels.</p>
+                            <h3 class="text-lg font-bold mb-2">1. Find a Base Vehicle</h3>
+                            <p class="text-gray-600">A yellow Power Wheels is still a great start. A Jeep or van style with a boxier shape is ideal, as it provides a better base for a bus body. Look on Facebook Marketplace for used models.</p>
                         </div>
                         <div class="card p-6">
                             <h3 class="text-lg font-bold mb-2">2. Prep & Paint</h3>
-                            <p class="text-gray-600">Clean all plastic surfaces thoroughly with soap and water, then wipe with isopropyl alcohol. Use a spray paint designed for plastic (like Krylon Fusion) for the best results. You'll need black for the chassis/undercarriage and silver for the "engine" parts.</p>
+                            <p class="text-gray-600">Clean all surfaces thoroughly. You will need "School Bus Yellow" spray paint for the main body. Use white for the roof, black for the chassis and details, and silver for the front grille and bumper.</p>
                         </div>
                         <div class="card p-6">
                             <h3 class="text-lg font-bold mb-2">3. Graphics & Decals</h3>
-                            <p class="text-gray-600">Design or download Earthshaker logos. You can print them on adhesive vinyl paper at home or at a local print shop. Key graphics include the "Earthshaker" text, sponsor logos (like BKT), and the monster truck's "eyes" on the front.</p>
+                            <p class="text-gray-600">The key decals are the black stripes along the side, the "SCHOOL BUS" text, and the windows. You can print these on adhesive vinyl or even create them using black duct tape for an easy alternative.</p>
                         </div>
                         <div class="card p-6 lg:col-span-2">
-                            <h3 class="text-lg font-bold mb-2">4. Custom Dump Bed</h3>
-                            <p class="text-gray-600">Earthshaker's most iconic feature is its massive dump bed. You can construct a lightweight version using cardboard boxes. Cut and tape them into shape, then paint with yellow plastic-fusion spray paint to match the truck body. Reinforce corners with duct tape on the inside for durability.</p>
+                            <h3 class="text-lg font-bold mb-2">4. Construct the Bus Body</h3>
+                            <p class="text-gray-600">Use large cardboard boxes to build a boxy school bus frame around the Power Wheels seat and steering wheel. Create a roof and sides. Secure the pieces together with duct tape and hot glue, then paint the entire structure School Bus Yellow (with a white roof).</p>
                         </div>
-                        <div class="card p-6">
+                         <div class="card p-6">
                             <h3 class="text-lg font-bold mb-2">5. Finishing Touches</h3>
-                            <p class="text-gray-600">Add details like a "supercharged engine" in the truck bed using painted cardboard boxes and plastic tubes. Consider adding small orange flags on poles attached to the back for an authentic arena feel.</p>
+                            <p class="text-gray-600">Create a stop sign from red cardboard that can be folded out from the side. Use red and yellow bottle caps or reflectors for the flashing lights on the front and back. Paint a simple grille on the front with silver paint.</p>
                         </div>
                     </div>
                      <div class="mt-8 text-center">
@@ -219,7 +219,7 @@
                     
                     <div class="grid md:grid-cols-1 lg:grid-cols-2 gap-8">
                         <div class="card p-6">
-                            <h3 class="text-xl font-semibold mb-4">Earthshaker Upgrade Ideas</h3>
+                            <h3 class="text-xl font-semibold mb-4">Classroom Crusher Upgrade Ideas</h3>
                             <button id="generateTruckIdeas" class="w-full bg-gray-800 text-white font-bold py-2 px-4 rounded-lg hover:bg-gray-700 transition-colors mb-4">Generate Truck Ideas</button>
                             <div id="truckIdeasLoader" class="hidden mx-auto my-4 loader"></div>
                             <div id="truckIdeasResult" class="text-gray-600 space-y-4"></div>
@@ -240,24 +240,25 @@
     <script>
         const projectData = {
             checklist: [
-                { text: "Source yellow Power Wheels truck", completed: false },
+                { text: "Source yellow Power Wheels (Jeep/van style ideal)", completed: false },
                 { text: "Purchase all paints and supplies", completed: false },
                 { text: "Clean and prep Power Wheels for painting", completed: false },
-                { text: "Paint chassis and engine details", completed: false },
-                { text: "Design and print Earthshaker decals", completed: false },
-                { text: "Apply all decals to the truck", completed: false },
-                { text: "Construct and paint cardboard dump bed", completed: false },
-                { text: "Attach dump bed and finishing touches", completed: false },
+                { text: "Paint body yellow, roof white, and chassis black", completed: false },
+                { text: "Construct and paint cardboard bus body frame", completed: false },
+                { text: "Attach bus body to Power Wheels", completed: false },
+                { text: "Apply black stripes and 'SCHOOL BUS' decals", completed: false },
+                { text: "Create and attach stop sign and lights", completed: false },
                 { text: "Acquire adult pit crew jumpsuits", completed: false },
                 { text: "Get hats and accessories for adults", completed: false },
                 { text: "Create 'Crew Chief' infant costume", completed: false },
                 { text: "Final costume fitting for everyone", completed: false }
             ],
             shoppingList: [
-                { item: "Used Yellow Power Wheels Truck", category: "Truck", cost: 100 },
-                { item: "Plastic Fusion Spray Paint (Yellow, Black, Silver)", category: "Truck", cost: 25 },
-                { item: "Adhesive Vinyl Paper", category: "Truck", cost: 15 },
+                { item: "Used Yellow Power Wheels", category: "Truck", cost: 100 },
+                { item: "Spray Paint (Yellow, Black, White, Silver, Red)", category: "Truck", cost: 35 },
+                { item: "Adhesive Vinyl or Black Duct Tape", category: "Truck", cost: 15 },
                 { item: "Large Cardboard Boxes", category: "Truck", cost: 0 },
+                { item: "Red/Yellow Bottle Caps or Reflectors", category: "Truck", cost: 5},
                 { item: "Duct Tape & Hot Glue", category: "Truck", cost: 10 },
                 { item: "Adult Work Jumpsuits (x2)", category: "Crew", cost: 80 },
                 { item: "Baseball Caps (x2)", category: "Crew", cost: 20 },
@@ -471,7 +472,7 @@
         truckIdeasBtn.addEventListener('click', async () => {
             truckIdeasLoader.style.display = 'block';
             truckIdeasResult.innerHTML = '';
-            const userQuery = "Brainstorm 5 creative, low-budget DIY ideas to make a kid's Power Wheels monster truck costume, themed like Earthshaker from Monster Jam, look even more awesome. Focus on simple materials like cardboard, paint, and craft supplies. Format the response as a numbered list.";
+            const userQuery = "Brainstorm 5 creative, low-budget DIY ideas to make a kid's Power Wheels monster truck costume, themed like the 'Classroom Crusher' school bus from Monster Jam, look even more awesome. Focus on simple materials like cardboard, paint, and craft supplies. Format the response as a numbered list.";
             const systemPrompt = "You are a creative assistant specializing in DIY Halloween costumes for kids. Provide fun, practical, and safe ideas.";
             
             const responseText = await callGeminiAPI(userQuery, systemPrompt);
@@ -488,7 +489,7 @@
         crewBackstoryBtn.addEventListener('click', async () => {
             crewBackstoryLoader.style.display = 'block';
             crewBackstoryResult.innerHTML = '';
-            const userQuery = "Write a short, fun, and imaginative backstory (3 paragraphs) for a family dressing up as a Monster Jam pit crew for Halloween. The crew includes a Dad, a Mom, and a 6-month-old baby who is the 'Crew Chief'. The driver of their truck, Earthshaker, is their young son.";
+            const userQuery = "Write a short, fun, and imaginative backstory (3 paragraphs) for a family dressing up as a Monster Jam pit crew for Halloween. The crew includes a Dad, a Mom, and a 6-month-old baby who is the 'Crew Chief'. The driver of their truck, the school bus-themed Classroom Crusher, is their young son.";
             const systemPrompt = "You are a creative writer who crafts charming and imaginative family stories.";
             
             const responseText = await callGeminiAPI(userQuery, systemPrompt);
