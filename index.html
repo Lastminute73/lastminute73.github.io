@@ -8,12 +8,13 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     <!-- Chosen Palette: Warm Neutrals with Earthshaker Yellow Accent -->
-    <!-- Application Structure Plan: The application uses a task-oriented, tabbed navigation structure ('Overview', 'The Truck', 'The Pit Crew', 'Shopping List') to break the complex project into manageable parts. This is more user-friendly than a single long document, allowing the user to focus on one aspect at a time, such as building the truck or planning the costumes. The 'Overview' tab acts as a central dashboard with an interactive checklist and progress bar, providing immediate feedback on project completion. This structure was chosen to guide the user through the planning and execution phases logically and interactively. -->
+    <!-- Application Structure Plan: The application uses a task-oriented, tabbed navigation structure ('Overview', 'The Truck', 'The Pit Crew', 'Shopping List', 'Creative Ideas') to break the project into manageable parts. The 'Creative Ideas' tab, powered by the Gemini API, was added to provide AI-driven inspiration for truck modifications and character backstories, enhancing the user's creative process. The 'Overview' tab remains a central dashboard. This structure guides the user logically while offering creative assistance. -->
     <!-- Visualization & Content Choices: 
         - Project Checklist (HTML/JS): Goal: Organize/Track. Interaction: Users check items, triggering a dynamic progress bar. Justification: Provides a tangible sense of accomplishment and a clear overview of remaining tasks.
-        - Progress Bar (HTML/CSS/JS): Goal: Show Change. Interaction: Width updates based on checklist completion. Justification: Visually represents progress, making the project feel more engaging.
-        - Filterable Shopping List (HTML/JS): Goal: Organize. Interaction: Users click category buttons to filter the list. Justification: Simplifies the shopping process by allowing focus on specific item categories (e.g., only truck parts).
-        - Cost Breakdown Donut Chart (Chart.js/Canvas): Goal: Inform/Compare. Interaction: Tooltips on hover provide cost details. Justification: Offers a quick, visual summary of the budget allocation between the main costume elements (truck vs. crew), helping with financial planning. 
+        - Progress Bar (HTML/CSS/JS): Goal: Show Change. Interaction: Width updates based on checklist completion. Justification: Visually represents progress.
+        - Filterable Shopping List (HTML/JS): Goal: Organize. Interaction: Category filters. Justification: Simplifies shopping.
+        - Cost Breakdown Donut Chart (Chart.js/Canvas): Goal: Inform/Compare. Interaction: Tooltips on hover. Justification: Visual budget summary.
+        - AI Idea Generation (Gemini API/JS): Goal: Inspire. Interaction: Button click calls LLM to generate creative ideas for truck upgrades and a crew backstory. Justification: Adds a dynamic, creative element that helps the user personalize their project beyond the initial plan.
     -->
     <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
     <style>
@@ -55,6 +56,18 @@
                 height: 350px;
             }
         }
+        .loader {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #FECB2E;
+            border-radius: 50%;
+            width: 32px;
+            height: 32px;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
     </style>
 </head>
 <body class="antialiased">
@@ -64,11 +77,12 @@
             <p class="mt-2 text-lg text-gray-600">A complete guide to creating an Earthshaker truck and Pit Crew family costume.</p>
         </header>
 
-        <nav class="flex justify-center border-b-2 border-gray-200 mb-8 space-x-2 md:space-x-4">
-            <button data-tab="overview" class="tab-btn text-sm md:text-base py-3 px-4 md:px-6 border-b-4 tab-active">Overview & Checklist</button>
-            <button data-tab="truck" class="tab-btn text-sm md:text-base py-3 px-4 md:px-6 border-b-4 tab-inactive">The Truck: Earthshaker</button>
+        <nav class="flex flex-wrap justify-center border-b-2 border-gray-200 mb-8 space-x-2 md:space-x-4">
+            <button data-tab="overview" class="tab-btn text-sm md:text-base py-3 px-4 md:px-6 border-b-4 tab-active">Overview</button>
+            <button data-tab="truck" class="tab-btn text-sm md:text-base py-3 px-4 md:px-6 border-b-4 tab-inactive">The Truck</button>
             <button data-tab="crew" class="tab-btn text-sm md:text-base py-3 px-4 md:px-6 border-b-4 tab-inactive">The Pit Crew</button>
             <button data-tab="shopping" class="tab-btn text-sm md:text-base py-3 px-4 md:px-6 border-b-4 tab-inactive">Shopping List</button>
+            <button data-tab="ideas" class="tab-btn text-sm md:text-base py-3 px-4 md:px-6 border-b-4 tab-inactive">Creative Ideas ✨</button>
         </nav>
 
         <main>
@@ -117,6 +131,11 @@
                             <p class="text-gray-600">Add details like a "supercharged engine" in the truck bed using painted cardboard boxes and plastic tubes. Consider adding small orange flags on poles attached to the back for an authentic arena feel.</p>
                         </div>
                     </div>
+                     <div class="mt-8 text-center">
+                        <button id="getTruckIdeasBtn" class="bg-yellow-400 hover:bg-yellow-500 text-gray-800 font-bold py-3 px-6 rounded-lg transition-colors">
+                            ✨ Get More Truck Upgrade Ideas
+                        </button>
+                    </div>
                 </section>
             </div>
 
@@ -149,6 +168,11 @@
                                 <li><strong>Accessory:</strong> A soft, plush toy wrench or a pair of baby-sized noise-canceling headphones for the theme.</li>
                             </ul>
                         </div>
+                    </div>
+                    <div class="mt-8 text-center">
+                        <button id="getCrewBackstoryBtn" class="bg-yellow-400 hover:bg-yellow-500 text-gray-800 font-bold py-3 px-6 rounded-lg transition-colors">
+                            ✨ Generate a Fun Pit Crew Backstory
+                        </button>
                     </div>
                 </section>
             </div>
@@ -183,6 +207,29 @@
                             <div class="chart-container">
                                 <canvas id="costChart"></canvas>
                             </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <div id="ideas" class="tab-content hidden">
+                <section>
+                    <h2 class="text-2xl font-bold mb-4 text-center">✨ Creative Corner ✨</h2>
+                    <p class="text-center text-gray-600 max-w-3xl mx-auto mb-8">Feeling stuck? Let our AI assistant brainstorm some unique ideas to take your family's costume to the next level. Click the buttons below to generate new ideas!</p>
+                    
+                    <div class="grid md:grid-cols-1 lg:grid-cols-2 gap-8">
+                        <div class="card p-6">
+                            <h3 class="text-xl font-semibold mb-4">Earthshaker Upgrade Ideas</h3>
+                            <button id="generateTruckIdeas" class="w-full bg-gray-800 text-white font-bold py-2 px-4 rounded-lg hover:bg-gray-700 transition-colors mb-4">Generate Truck Ideas</button>
+                            <div id="truckIdeasLoader" class="hidden mx-auto my-4 loader"></div>
+                            <div id="truckIdeasResult" class="text-gray-600 space-y-4"></div>
+                        </div>
+
+                        <div class="card p-6">
+                            <h3 class="text-xl font-semibold mb-4">Pit Crew Backstory</h3>
+                            <button id="generateCrewBackstory" class="w-full bg-gray-800 text-white font-bold py-2 px-4 rounded-lg hover:bg-gray-700 transition-colors mb-4">Generate Crew Backstory</button>
+                            <div id="crewBackstoryLoader" class="hidden mx-auto my-4 loader"></div>
+                            <div id="crewBackstoryResult" class="text-gray-600 space-y-3 prose"></div>
                         </div>
                     </div>
                 </section>
@@ -272,21 +319,35 @@
             }
         });
 
-        tabs.forEach(tab => {
-            tab.addEventListener('click', () => {
-                tabs.forEach(item => {
-                    item.classList.remove('tab-active');
-                    item.classList.add('tab-inactive');
-                });
-                tab.classList.add('tab-active');
-                tab.classList.remove('tab-inactive');
-
-                contents.forEach(content => {
-                    content.classList.add('hidden');
-                });
-                document.getElementById(tab.dataset.tab).classList.remove('hidden');
+        function switchTab(tabId) {
+             tabs.forEach(item => {
+                item.classList.remove('tab-active');
+                item.classList.add('tab-inactive');
+                if(item.dataset.tab === tabId) {
+                    item.classList.add('tab-active');
+                    item.classList.remove('tab-inactive');
+                }
             });
+            contents.forEach(content => {
+                content.classList.add('hidden');
+            });
+            document.getElementById(tabId).classList.remove('hidden');
+        }
+
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => switchTab(tab.dataset.tab));
         });
+        
+        document.getElementById('getTruckIdeasBtn').addEventListener('click', () => {
+            switchTab('ideas');
+            document.getElementById('generateTruckIdeas').click();
+        });
+
+        document.getElementById('getCrewBackstoryBtn').addEventListener('click', () => {
+            switchTab('ideas');
+            document.getElementById('generateCrewBackstory').click();
+        });
+
 
         function renderShoppingList(filter = 'all') {
             shoppingListBody.innerHTML = '';
@@ -365,6 +426,76 @@
                 }
             });
         }
+        
+        async function callGeminiAPI(userQuery, systemPrompt, maxRetries = 3) {
+            const apiKey = ""; 
+            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
+            const payload = {
+                contents: [{ parts: [{ text: userQuery }] }],
+                systemInstruction: { parts: [{ text: systemPrompt }] },
+            };
+
+            for (let i = 0; i < maxRetries; i++) {
+                try {
+                    const response = await fetch(apiUrl, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+
+                    const result = await response.json();
+                    const candidate = result.candidates?.[0];
+                    if (candidate && candidate.content?.parts?.[0]?.text) {
+                        return candidate.content.parts[0].text;
+                    } else {
+                        throw new Error("Invalid response structure from API.");
+                    }
+                } catch (error) {
+                    console.error(`API call failed (attempt ${i + 1}):`, error);
+                    if (i === maxRetries - 1) {
+                         return "Sorry, I couldn't generate ideas right now. Please try again later.";
+                    }
+                    await new Promise(resolve => setTimeout(resolve, 1000 * Math.pow(2, i)));
+                }
+            }
+        }
+        
+        const truckIdeasBtn = document.getElementById('generateTruckIdeas');
+        const truckIdeasLoader = document.getElementById('truckIdeasLoader');
+        const truckIdeasResult = document.getElementById('truckIdeasResult');
+        
+        truckIdeasBtn.addEventListener('click', async () => {
+            truckIdeasLoader.style.display = 'block';
+            truckIdeasResult.innerHTML = '';
+            const userQuery = "Brainstorm 5 creative, low-budget DIY ideas to make a kid's Power Wheels monster truck costume, themed like Earthshaker from Monster Jam, look even more awesome. Focus on simple materials like cardboard, paint, and craft supplies. Format the response as a numbered list.";
+            const systemPrompt = "You are a creative assistant specializing in DIY Halloween costumes for kids. Provide fun, practical, and safe ideas.";
+            
+            const responseText = await callGeminiAPI(userQuery, systemPrompt);
+            
+            const ideas = responseText.split(/\d+\./).filter(Boolean).map(idea => idea.trim());
+            truckIdeasResult.innerHTML = ideas.map(idea => `<div class="p-4 border rounded-lg bg-gray-50">${idea.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')}</div>`).join('');
+            truckIdeasLoader.style.display = 'none';
+        });
+
+        const crewBackstoryBtn = document.getElementById('generateCrewBackstory');
+        const crewBackstoryLoader = document.getElementById('crewBackstoryLoader');
+        const crewBackstoryResult = document.getElementById('crewBackstoryResult');
+
+        crewBackstoryBtn.addEventListener('click', async () => {
+            crewBackstoryLoader.style.display = 'block';
+            crewBackstoryResult.innerHTML = '';
+            const userQuery = "Write a short, fun, and imaginative backstory (3 paragraphs) for a family dressing up as a Monster Jam pit crew for Halloween. The crew includes a Dad, a Mom, and a 6-month-old baby who is the 'Crew Chief'. The driver of their truck, Earthshaker, is their young son.";
+            const systemPrompt = "You are a creative writer who crafts charming and imaginative family stories.";
+            
+            const responseText = await callGeminiAPI(userQuery, systemPrompt);
+            crewBackstoryResult.innerHTML = responseText.split('\n').filter(p => p.trim() !== '').map(p => `<p>${p}</p>`).join('');
+            crewBackstoryLoader.style.display = 'none';
+        });
+
 
         function init() {
             renderChecklist();
@@ -377,3 +508,4 @@
     </script>
 </body>
 </html>
+
